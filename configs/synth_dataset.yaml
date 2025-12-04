@@ -1,0 +1,16 @@
+src_dataset: data/Dataset_v01
+dst_dataset: data/Dataset_v02
+seed: 1
+shape: [256,256]
+n_images:
+  train: 512
+  test: 128
+padding: 12
+cell_count_range: [8,12]
+rotate: true
+alpha: 0.6
+noise_range: [0.01, 0.05]
+blur_range: [0.0, 1.5]
+stacking: alpha
+limit_overlaps: 2
+max_intersection: 200

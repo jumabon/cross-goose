@@ -1,0 +1,4 @@
+images: data/BBBC010_v2_images
+labels: data/BBBC010_v1_foreground_eachworm
+save_path: data/Dataset_v01
+seed: 0

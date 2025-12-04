@@ -1,0 +1,15 @@
+evaluations: 
+  - model: model_d02/251127-183327_standard-goose
+    dataset: Dataset_v02
+    image_normalization: M1P1
+    ckpt_crit: best_ap_0.75
+    subset: test
+  - model: model_d02/251127-183327_standard-goose
+    dataset: Dataset_v01
+    image_normalization: M1P1
+    ckpt_crit: best_ap_0.75
+    subset: test
+thresholds: [0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9]
+results_dir: results
+models_log_root: model_logs
+data_root: data
