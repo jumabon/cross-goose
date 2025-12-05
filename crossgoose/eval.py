@@ -10,10 +10,11 @@ import pandas as pd
 import tifffile
 import torch
 import yaml
-from cellpose.metrics import aggregated_jaccard_index, average_precision
 from natsort import natsorted
 from tqdm import tqdm
 
+from crossgoose.cellpose.metrics import (aggregated_jaccard_index,
+                                         average_precision)
 from crossgoose.data import ImageNormalization, normalize_image
 from crossgoose.mask_utils import SaveFormat, save_masks
 from crossgoose.models import Ckptcriterion, CrossGooseModel

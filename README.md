@@ -4,7 +4,11 @@
 implementation of _Improving Gradient Flow methods for instance segmentation of crossing objects_ J. Mabon & J.C. Olivo-Marin, submitted to ISBI 2026
 
 ## Installation
-
+Setup the environment with [conda/mamba](https://github.com/conda-forge/miniforge) :
+```bash
+mamba create -f env.yaml -y
+mamba activate crossgoose
+```
 
 ## Training
 

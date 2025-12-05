@@ -89,5 +89,6 @@ def get_labels_cmap(base_cmap: str = 'RdYlGn'):
     newcolors[0, :] = [0, 0, 0, 1]
     return ListedColormap(newcolors)
 
+
 def random_adjective():
-    return random.choice(list(open('crossgoose/misc/english-adjectives.txt')))[:-1]
+    return random.choice(list(open('crossgoose/misc/english-adjectives.txt', encoding='utf-8')))[:-1]

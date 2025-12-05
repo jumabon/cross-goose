@@ -169,7 +169,7 @@ def make_synth_dataset(
     max_intersection: int,
     limit_overlaps: int,
     stacking: str = "alpha",
-    bg_range:List=[0.5,1.0],
+    bg_range:List[float] =[0.5,1.0],
 ):
 
     for subset in ['train','test','val']:
