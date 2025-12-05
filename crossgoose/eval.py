@@ -33,7 +33,10 @@ def _eval_model(
     model = CrossGooseModel.load_model(model_path, ckpt_crit=ckpt_crit)
     model = model.to('cuda')
     model.eval()
-    model_name = os.path.split(model_path)[-1]
+    if '/' in model_path:
+        model_name = os.path.split(model_path)[-1]
+    else:
+        model_name = model_path
     print(f"model {model_name} loaded ")
 
     dataset_name = os.path.split(dataset)[-1]
@@ -157,7 +160,6 @@ def eval_models(
     evaluations: ModelEvalConfig | List[ModelEvalConfig],
     thresholds: List[float],
     results_dir: str = 'results',
-    models_log_root: str = 'model_logs',
     data_root: str = 'data'
 ):
     if not isinstance(evaluations, list):
@@ -165,7 +167,7 @@ def eval_models(
 
     for exp in tqdm(evaluations, desc='evaluating models on datasets'):
         _eval_model(
-            model_path=os.path.join(models_log_root, exp.model),
+            model_path=exp.model,
             results_dir=results_dir,
             dataset=os.path.join(data_root, exp.dataset),
             subset=exp.subset,
