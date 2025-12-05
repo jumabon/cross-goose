@@ -1,0 +1,106 @@
+# lightning.pytorch==2.5.5
+seed_everything: 16
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  num_nodes: 1
+  precision: null
+  logger:
+    class_path: lightning.pytorch.loggers.TensorBoardLogger
+    init_args:
+      save_dir: model_logs
+      name: model_d02
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      filename: best-{epoch}-{step}-{val_ap_0.75:.4f}
+      monitor: val_ap_0.75
+      save_last: true
+      save_top_k: 1
+      mode: max
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      filename: best-{epoch}-{step}-{val_ap_0.9:.4f}
+      monitor: val_ap_0.9
+      save_last: false
+      save_top_k: 1
+      mode: max
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      filename: best-{epoch}-{step}-{val_ap_0.5:.4f}
+      monitor: val_ap_0.5
+      verbose: false
+      save_last: false
+      save_top_k: 2
+      mode: max
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch
+      log_momentum: false
+      log_weight_decay: false
+  max_time: 00:12:00:00
+  check_val_every_n_epoch: 1
+  log_every_n_steps: 10
+  enable_progress_bar: true
+model:
+  flow_fn:
+    class_path: crossgoose.models.FlowLinear
+    init_args:
+      embedding_dim: 8
+      hidden_dims:
+      - 16
+      - 8
+      value_dim: 2
+  embeddings_dim: 8
+  crit_flow_weight: 0.1
+  crit_cellprob_weight: 2.0
+  n_steps: 200
+  n_samples: 100
+  sampling_method: RANDOM_ON_CELL
+  random_on_cell_sigma: 4.0
+  overlap_focus_multiplier: 1.0
+  backbone_realease_delay: null
+data:
+  data_root: data
+  dataset: Dataset_v02
+  batch_size: 4
+  num_workers: 12
+  validation: true
+  augmentation_params:
+    patch_size: 256
+    flip_h: true
+    flip_v: true
+    rotate: false
+    scale_range: null
+    rot90: false
+  alpha_heat: 0.95
+  recompute_flows: false
+  closure_radius: 8
+  cuda_flow_compute: true
+  center_method: graph_center_weighted
+  bootstrap_factor: 8
+  prefetch_factor: 2
+  lazy_flow_computing: false
+  return_overlap_map: false
+  keep_data_in_memory: true
+  val_batch_size: 2
+  val_patch_size: 512
+  image_normalization: M1P1
+optimizer:
+  class_path: torch.optim.AdamW
+  init_args:
+    lr: 0.005
+    betas:
+    - 0.9
+    - 0.999
+    eps: 1.0e-08
+    weight_decay: 0.01
+    amsgrad: false
+    maximize: false
+    foreach: null
+    capturable: false
+    differentiable: false
+    fused: null
+lr_scheduler: null
+ckpt_path: null

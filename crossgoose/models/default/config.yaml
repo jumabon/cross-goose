@@ -1,0 +1,175 @@
+# lightning.pytorch==2.5.5
+seed_everything: 16
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  num_nodes: 1
+  precision: null
+  logger:
+    class_path: lightning.pytorch.loggers.TensorBoardLogger
+    init_args:
+      save_dir: model_logs
+      name: model_d02
+      version: 251127-183327_standard-goose
+      log_graph: false
+      default_hp_metric: true
+      prefix: ''
+      sub_dir: null
+      comment: ''
+      purge_step: null
+      max_queue: 10
+      flush_secs: 120
+      filename_suffix: ''
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      dirpath: null
+      filename: best-{epoch}-{step}-{val_ap_0.75:.4f}
+      monitor: val_ap_0.75
+      verbose: false
+      save_last: true
+      save_top_k: 1
+      save_on_exception: false
+      save_weights_only: false
+      mode: max
+      auto_insert_metric_name: true
+      every_n_train_steps: null
+      train_time_interval: null
+      every_n_epochs: null
+      save_on_train_epoch_end: null
+      enable_version_counter: true
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      dirpath: null
+      filename: best-{epoch}-{step}-{val_ap_0.9:.4f}
+      monitor: val_ap_0.9
+      verbose: false
+      save_last: false
+      save_top_k: 1
+      save_on_exception: false
+      save_weights_only: false
+      mode: max
+      auto_insert_metric_name: true
+      every_n_train_steps: null
+      train_time_interval: null
+      every_n_epochs: null
+      save_on_train_epoch_end: null
+      enable_version_counter: true
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      dirpath: null
+      filename: best-{epoch}-{step}-{val_ap_0.5:.4f}
+      monitor: val_ap_0.5
+      verbose: false
+      save_last: false
+      save_top_k: 2
+      save_on_exception: false
+      save_weights_only: false
+      mode: max
+      auto_insert_metric_name: true
+      every_n_train_steps: null
+      train_time_interval: null
+      every_n_epochs: null
+      save_on_train_epoch_end: null
+      enable_version_counter: true
+  - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+    init_args:
+      logging_interval: epoch
+      log_momentum: false
+      log_weight_decay: false
+  fast_dev_run: false
+  max_epochs: null
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: 00:12:00:00
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: null
+  log_every_n_steps: 10
+  enable_checkpointing: null
+  enable_progress_bar: true
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: null
+  model_registry: null
+model:
+  flow_fn:
+    class_path: crossgoose.models.FlowLinear
+    init_args:
+      embedding_dim: 8
+      hidden_dims:
+      - 16
+      - 8
+      value_dim: 2
+  embeddings_dim: 8
+  crit_flow_weight: 0.1
+  crit_cellprob_weight: 2.0
+  n_steps: 200
+  n_samples: 100
+  sampling_method: RANDOM_ON_CELL
+  random_on_cell_sigma: 4.0
+  overlap_focus_multiplier: 1.0
+  backbone_realease_delay: null
+data:
+  data_root: data
+  dataset: Dataset_v02
+  batch_size: 4
+  num_workers: 12
+  augmentation_params:
+    patch_size: 256
+    flip_h: true
+    flip_v: true
+    rotate: false
+    rot90: false
+    scale_range: null
+    deterministic_patch: false
+  validation: true
+  alpha_heat: 0.95
+  recompute_flows: false
+  closure_radius: 8
+  cuda_flow_compute: true
+  center_method: graph_center_weighted
+  bootstrap_factor: 8
+  prefetch_factor: 2
+  lazy_flow_computing: false
+  return_overlap_map: false
+  keep_data_in_memory: true
+  val_batch_size: 2
+  val_patch_size: 512
+  image_normalization: M1P1
+optimizer:
+  class_path: torch.optim.AdamW
+  init_args:
+    lr: 0.005
+    betas:
+    - 0.9
+    - 0.999
+    eps: 1.0e-08
+    weight_decay: 0.01
+    amsgrad: false
+    maximize: false
+    foreach: null
+    capturable: false
+    differentiable: false
+    fused: null
+lr_scheduler: null
+ckpt_path: null
